@@ -12,6 +12,8 @@
     <modules>
         <module>vs-commons</module>
         <module>vs-commons</module>
+        <module>vs-web</module>
+        <module>vs-mbg</module>
     </modules>
     <!-- 父级依赖 -->
     <parent>
@@ -25,10 +27,21 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <!-- 集中版本管理 -->
+        <springfox-swagger2.version>2.9.1</springfox-swagger2.version>
+        <springfox-swagger-ui>2.9.1</springfox-swagger-ui>
+        <hutool.version>4.5.16</hutool.version>
+        <lombok.version>1.18.6</lombok.version>
+        <spring.data.commons.version>2.1.5.RELEASE</spring.data.commons.version>
+        <mybatis.generator.core.version>1.3.7</mybatis.generator.core.version>
+        <mybatis.version>3.4.6</mybatis.version>
+        <mysql.connector.java.version>8.0.15</mysql.connector.java.version>
+        <pagehelper.version>5.1.8</pagehelper.version>
+        <tk.mybatis.version>4.0.0</tk.mybatis.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- springCloud 版本-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -77,20 +90,20 @@
         </pluginManagement>
         <!-- 热部署 -->
         <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.zeroturnaround</groupId>-->
-                <!--<artifactId>jrebel-maven-plugin</artifactId>-->
-                <!--<version>1.1.5</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>generate-rebel-xml</id>-->
-                        <!--<phase>process-resources</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>generate</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+        <!--<plugin>-->
+        <!--<groupId>org.zeroturnaround</groupId>-->
+        <!--<artifactId>jrebel-maven-plugin</artifactId>-->
+        <!--<version>1.1.5</version>-->
+        <!--<executions>-->
+        <!--<execution>-->
+        <!--<id>generate-rebel-xml</id>-->
+        <!--<phase>process-resources</phase>-->
+        <!--<goals>-->
+        <!--<goal>generate</goal>-->
+        <!--</goals>-->
+        <!--</execution>-->
+        <!--</executions>-->
+        <!--</plugin>-->
         <!--</plugins>-->
     </build>
 </project>

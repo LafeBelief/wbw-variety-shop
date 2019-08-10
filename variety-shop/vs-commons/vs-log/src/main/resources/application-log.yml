@@ -1,0 +1,9 @@
+# sql 信息打印
+logging:
+  level:
+    cn.*: debug
+  file:
+    max-size: 30MB
+    # 相对路径，当前项目下
+  #  path: logs/spring.log
+  config: classpath:logback-spring.xml

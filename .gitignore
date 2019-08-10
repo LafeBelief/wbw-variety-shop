@@ -2,7 +2,7 @@
 # idea自身
 .idea/
 /target/
-
+*.iml
 
 # 日志
 /logs/
