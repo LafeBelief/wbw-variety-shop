@@ -9,15 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vs-log</artifactId>
+    <artifactId>vs-utils</artifactId>
 
-    <dependencies>
-        <!--集成 logstash ,日志收集 -->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>${logstash.logback.version}</version>
-        </dependency>
 
-    </dependencies>
 </project>

@@ -11,7 +11,6 @@
 
     <modules>
         <module>vs-commons</module>
-        <module>vs-commons</module>
         <module>vs-web</module>
         <module>vs-mbg</module>
     </modules>
@@ -37,6 +36,7 @@
         <mysql.connector.java.version>8.0.15</mysql.connector.java.version>
         <pagehelper.version>5.1.8</pagehelper.version>
         <tk.mybatis.version>4.0.0</tk.mybatis.version>
+        <logstash.logback.version>4.8</logstash.logback.version>
     </properties>
 
     <dependencyManagement>

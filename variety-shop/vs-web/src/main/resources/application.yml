@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: log,data
+
+server:
+  port: 9091

@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>vs-log</module>
+        <module>vs-utils</module>
     </modules>
     <parent>
         <groupId>cn.wbw.vs</groupId>
