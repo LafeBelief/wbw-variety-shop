@@ -18,7 +18,6 @@ import java.util.List;
  * @author mall
  */
 @Log
-@Api(tags = {},value = "")
 public class Generator {
     public static void main(String[] args) throws Exception {
         //MBG 执行过程中的警告信息

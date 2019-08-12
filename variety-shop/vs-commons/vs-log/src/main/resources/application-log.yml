@@ -1,8 +1,10 @@
 # sql 信息打印
 logging:
   level:
-    cn.wbw.*: debug # 项目日志
+    root: info #日志配置DEBUG,INFO,WARN,ERROR
+    cn.wbw.vs: DEBUG
   file:
     max-size: 30MB
   #  path: logs/spring.log # 相对路径，当前项目下
   config: classpath:logback-spring.xml
+

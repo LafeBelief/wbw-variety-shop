@@ -9,6 +9,5 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>vs-log</artifactId>
-
+    <artifactId>vs-mybatis</artifactId>
 </project>

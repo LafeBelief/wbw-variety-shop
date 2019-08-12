@@ -7,6 +7,7 @@
     <modules>
         <module>vs-log</module>
         <module>vs-utils</module>
+        <module>vs-mybatis</module>
     </modules>
     <parent>
         <groupId>cn.wbw.vs</groupId>
@@ -17,6 +18,11 @@
     <artifactId>vs-commons</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.wbw.vs</groupId>
+            <artifactId>vs-mbg</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- Swagger-UI API文档生产工具 -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -46,12 +52,23 @@
             <artifactId>spring-data-commons</artifactId>
             <version>${spring.data.commons.version}</version>
         </dependency>
-        <!-- mybatis 分页插件 -->
+        <!--集成 logstash ,日志收集 -->
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash.logback.version}</version>
         </dependency>
-
+        <!-- 工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <!--json或者alibaba的包-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
     </dependencies>
 </project>

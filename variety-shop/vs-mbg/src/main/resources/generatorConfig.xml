@@ -54,7 +54,7 @@ tk.mybatis.mapper.common.MySqlMapper,tk.mybatis.mapper.common.IdsMapper,tk.mybat
 
         <sqlMapGenerator targetPackage="mapper" targetProject="variety-shop\vs-mbg\src\main\resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.wbw.vs.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.wbw.vs.dao"
                              targetProject="variety-shop\vs-mbg\src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">

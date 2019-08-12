@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: log,data
+    active: data,log
 
 server:
   port: 9091
