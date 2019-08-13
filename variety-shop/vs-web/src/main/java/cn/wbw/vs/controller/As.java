@@ -6,6 +6,7 @@ import cn.wbw.vs.dao.UmsAdminMapper;
 import cn.wbw.vs.model.UmsAdmin;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class As {
     private UmsAdminMapper mapper;
 
     @RequestMapping("/123")
+    @ApiParam(name = "",value = "")
     @ApiOperation("测试aaa")
     public CommonResult sasa() {
 

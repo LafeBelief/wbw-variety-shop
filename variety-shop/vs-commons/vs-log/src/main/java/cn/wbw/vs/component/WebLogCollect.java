@@ -45,8 +45,8 @@ public class WebLogCollect {
     public void doBefore() {
     }
 
-    @AfterReturning(value = "webLog()", returning = "ret")
-    public void doAfterReturning(Object ret) {
+    @AfterReturning(value = "webLog()")
+    public void doAfterReturning() {
     }
 
     @Around("webLog()")
@@ -105,7 +105,7 @@ public class WebLogCollect {
             //将RequestParam注解修饰的参数作为请求参数
             RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);
             if (requestParam != null) {
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>(1);
                 String key = parameters[i].getName();
                 if (!StringUtils.isEmpty(requestParam.value())) {
                     key = requestParam.value();

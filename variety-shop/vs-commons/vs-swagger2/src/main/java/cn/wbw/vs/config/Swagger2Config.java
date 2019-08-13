@@ -3,6 +3,7 @@ package cn.wbw.vs.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author wbw
  * @date 2019/8/13 10:42
  */
+//@Profile("dev")
 @Slf4j
 @Configuration
 @EnableSwagger2

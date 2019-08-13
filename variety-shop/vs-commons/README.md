@@ -12,6 +12,7 @@
 
 
 ## vs-swagger2 api 在线文档
+#### 默认访问地址: http://127.0.0.1:9091/swagger-ui.html
 
 ## vs-system 系统配置
 ### 跨域、统一编码
