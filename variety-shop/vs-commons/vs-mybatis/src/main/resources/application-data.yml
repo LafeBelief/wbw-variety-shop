@@ -33,16 +33,16 @@ spring:
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
   #    sql 语句 打印到控制台
-    jpa:
-      database: MYSQL
-      show-sql: true
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
       hibernate:
-        ddl-auto: update
-        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.MySQL5Dialect
-      open-in-view: false
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    open-in-view: false
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

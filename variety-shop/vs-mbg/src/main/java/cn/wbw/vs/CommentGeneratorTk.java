@@ -9,6 +9,7 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.internal.util.StringUtility;
 import tk.mybatis.mapper.generator.MapperPlugin;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -16,6 +17,7 @@ import java.util.Set;
 /**
  * 重写  加入 给model的字段添加swagger注解
  * 加入：@Api
+ * 对应 generatorConfig.xml 的 plugin
  *
  * @author wbw
  * @date 0:45
@@ -25,15 +27,25 @@ public class CommentGeneratorTk extends MapperPlugin {
     private Set<String> mappers = new HashSet<>();
     private boolean caseSensitive = false;
     private boolean useMapperCommentGenerator = true;
-    //开始的分隔符，例如mysql为`，sqlserver为[
+    /**
+     * 开始的分隔符，例如mysql为`，sqlserver为[
+     */
     private String beginningDelimiter = "";
-    //结束的分隔符，例如mysql为`，sqlserver为]
+    /**
+     * 结束的分隔符，例如mysql为`，sqlserver为]
+     */
     private String endingDelimiter = "";
-    //数据库模式
+    /**
+     * 数据库模式
+     */
     private String schema;
-    //注释生成器
+    /**
+     * 注释生成器
+     */
     private CommentGeneratorConfiguration commentCfg;
-    //强制生成注解
+    /**
+     * 强制生成注解
+     */
     private boolean forceAnnotation;
 
     @Override
@@ -52,10 +64,10 @@ public class CommentGeneratorTk extends MapperPlugin {
     /**
      * 生成的Mapper接口
      *
-     * @param interfaze
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
+     * @param interfaze         接口
+     * @param topLevelClass     顶级类
+     * @param introspectedTable 自行检查表
+     * @return true or false
      */
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
@@ -74,8 +86,8 @@ public class CommentGeneratorTk extends MapperPlugin {
     /**
      * 处理实体类的包和@Table注解
      *
-     * @param topLevelClass
-     * @param introspectedTable
+     * @param topLevelClass     顶级类
+     * @param introspectedTable 自行检查表
      */
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         //引入JPA注解
@@ -102,15 +114,16 @@ public class CommentGeneratorTk extends MapperPlugin {
         } else if (forceAnnotation) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
         }
+        // 类注解
         topLevelClass.addAnnotation("@Api(value = \"" + tableName + "\",tags = {\"" + remarks + "\"})");
     }
 
     /**
      * 生成基础实体类
      *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
+     * @param topLevelClass     顶级类
+     * @param introspectedTable 自行检查表
+     * @return true or false
      */
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
@@ -121,29 +134,15 @@ public class CommentGeneratorTk extends MapperPlugin {
     /**
      * 生成实体类注解KEY对象
      *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
+     * @param topLevelClass     顶级类
+     * @param introspectedTable 自行检查表
+     * @return true or false
      */
     @Override
     public boolean modelPrimaryKeyClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         processEntityClass(topLevelClass, introspectedTable);
         return true;
     }
-
-    /**
-     * 生成带BLOB字段的对象
-     *
-     * @param topLevelClass
-     * @param introspectedTable
-     * @return
-     */
-    @Override
-    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        processEntityClass(topLevelClass, introspectedTable);
-        return false;
-    }
-
 
     @Override
     public void setContext(Context context) {
@@ -164,22 +163,20 @@ public class CommentGeneratorTk extends MapperPlugin {
         super.setProperties(properties);
         String mappers = this.properties.getProperty("mappers");
         if (StringUtility.stringHasValue(mappers)) {
-            for (String mapper : mappers.split(",")) {
-                this.mappers.add(mapper);
-            }
+            Collections.addAll(this.mappers, mappers.split(","));
         } else {
             throw new RuntimeException("Mapper插件缺少必要的mappers属性!");
         }
         String caseSensitive = this.properties.getProperty("caseSensitive");
         if (StringUtility.stringHasValue(caseSensitive)) {
-            this.caseSensitive = caseSensitive.equalsIgnoreCase("TRUE");
+            this.caseSensitive = "TRUE".equalsIgnoreCase(caseSensitive);
         }
         String forceAnnotation = this.properties.getProperty("forceAnnotation");
         if (StringUtility.stringHasValue(forceAnnotation)) {
             if (useMapperCommentGenerator) {
                 commentCfg.addProperty("forceAnnotation", forceAnnotation);
             }
-            this.forceAnnotation = forceAnnotation.equalsIgnoreCase("TRUE");
+            this.forceAnnotation = "TRUE".equalsIgnoreCase(forceAnnotation);
         }
         String beginningDelimiter = this.properties.getProperty("beginningDelimiter");
         if (StringUtility.stringHasValue(beginningDelimiter)) {

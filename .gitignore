@@ -18,3 +18,6 @@
 
 # 热部署
 */rebel.xml
+variety-shop/vs-commons/vs-log/target/
+variety-shop/vs-mbg/target/
+variety-shop/vs-web/target/

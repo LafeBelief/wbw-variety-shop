@@ -16,16 +16,23 @@ import java.util.Set;
 /**
  * 重写 加入 swagger 注解
  * 添加：@ApiModelProperty
+ * 注意：这里的配置对应 CommentGeneratorTk  的 setContext 自定义生成规则
  *
  * @author wbw
  * @date 1:09
  */
 public class MapperCommentGeneratorTk extends MapperCommentGenerator {
-    //开始的分隔符，例如mysql为`，sqlserver为[
+    /**
+     * 开始的分隔符，例如mysql为`，sqlserver为[
+     */
     private String beginningDelimiter = "";
-    //结束的分隔符，例如mysql为`，sqlserver为]
+    /**
+     * 结束的分隔符，例如mysql为`，sqlserver为]
+     */
     private String endingDelimiter = "";
-    //强制生成注解
+    /**
+     * 强制生成注解
+     */
     private boolean forceAnnotation;
 
     public MapperCommentGeneratorTk() {
@@ -34,21 +41,18 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
 
     @Override
     public void addJavaFileComment(CompilationUnit compilationUnit) {
-        return;
     }
 
     /**
      * xml中的注释
      *
-     * @param xmlElement
+     * @param xmlElement XML元素
      */
     @Override
     public void addComment(XmlElement xmlElement) {
         xmlElement.addElement(new TextElement("<!--"));
-        StringBuilder sb = new StringBuilder();
-        sb.append("  WARNING - ");
-        sb.append(MergeConstants.NEW_ELEMENT_TAG);
-        xmlElement.addElement(new TextElement(sb.toString()));
+        String sb = "  WARNING - " + MergeConstants.NEW_ELEMENT_TAG;
+        xmlElement.addElement(new TextElement(sb));
         xmlElement.addElement(new TextElement("-->"));
     }
 
@@ -68,24 +72,20 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
         }
         String forceAnnotation = properties.getProperty("forceAnnotation");
         if (StringUtility.stringHasValue(forceAnnotation)) {
-            this.forceAnnotation = forceAnnotation.equalsIgnoreCase("TRUE");
+            this.forceAnnotation = "TRUE".equalsIgnoreCase(forceAnnotation);
         }
     }
 
     @Override
     public String getDelimiterName(String name) {
-        StringBuilder nameBuilder = new StringBuilder();
-        nameBuilder.append(beginningDelimiter);
-        nameBuilder.append(name);
-        nameBuilder.append(endingDelimiter);
-        return nameBuilder.toString();
+        return beginningDelimiter + name + endingDelimiter;
     }
 
     /**
      * 删除标记
      *
-     * @param javaElement
-     * @param markAsDoNotDelete
+     * @param javaElement       java元素
+     * @param markAsDoNotDelete 标记为不删除
      */
     @Override
     public void addJavadocTag(JavaElement javaElement, boolean markAsDoNotDelete) {
@@ -101,8 +101,8 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     /**
      * Example使用
      *
-     * @param innerClass
-     * @param introspectedTable
+     * @param innerClass        内部类
+     * @param introspectedTable 自行检查表
      */
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
@@ -115,19 +115,18 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     /**
      * 给字段添加数据库备注
      *
-     * @param field
-     * @param introspectedTable
-     * @param introspectedColumn
+     * @param field              字段
+     * @param introspectedTable  自行检查表
+     * @param introspectedColumn 自行检查列
      */
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
         if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
             field.addJavaDocLine("/**");
-            StringBuilder sb = new StringBuilder();
-            sb.append(" * ");
-            sb.append(introspectedColumn.getRemarks());
-            field.addJavaDocLine(sb.toString());
+            String sb = " * " + introspectedColumn.getRemarks();
+            field.addJavaDocLine(sb);
             field.addJavaDocLine(" */");
+            // 此处格式化json
             field.addJavaDocLine("@ApiModelProperty(value = \"" + introspectedColumn.getRemarks().replaceAll("\"", "\\\\\"") + "\")");
         }
         //添加注解
@@ -135,10 +134,15 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
             //@Column
             field.addAnnotation("@Transient");
         }
-        for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
-            if (introspectedColumn == column) {
-                field.addAnnotation("@Id");
-                break;
+        String id = "id";
+        if (id.equalsIgnoreCase(field.getName())) {
+            field.addAnnotation("@Id");
+        } else {
+            for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
+                if (introspectedColumn == column) {
+                    field.addAnnotation("@Id");
+                    break;
+                }
             }
         }
         String column = introspectedColumn.getActualColumnName();
@@ -156,7 +160,8 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
             field.addAnnotation("@Column(name = \"" + getDelimiterName(column) + "\")");
         }
         if (introspectedColumn.isIdentity()) {
-            if (introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement().equals("JDBC")) {
+            String jdbc = "JDBC";
+            if (jdbc.equals(introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement())) {
                 field.addAnnotation("@GeneratedValue(generator = \"JDBC\")");
             } else {
                 field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY)");
@@ -172,8 +177,8 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     /**
      * Example使用
      *
-     * @param field
-     * @param introspectedTable
+     * @param field             字段
+     * @param introspectedTable 自行检查表
      */
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
@@ -185,8 +190,8 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     }
 
     /**
-     * @param method
-     * @param introspectedTable
+     * @param method            方法
+     * @param introspectedTable 自行检查表
      */
     @Override
     public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
@@ -195,9 +200,9 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     /**
      * getter方法注释
      *
-     * @param method
-     * @param introspectedTable
-     * @param introspectedColumn
+     * @param method             方法
+     * @param introspectedTable  进行自检表
+     * @param introspectedColumn 进行自检列
      */
     @Override
     public void addGetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
@@ -223,9 +228,9 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     /**
      * setter方法注释
      *
-     * @param method
-     * @param introspectedTable
-     * @param introspectedColumn
+     * @param method             方法
+     * @param introspectedTable  进行自检表
+     * @param introspectedColumn 进行自检列
      */
     @Override
     public void addSetterComment(Method method, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
@@ -252,9 +257,9 @@ public class MapperCommentGeneratorTk extends MapperCommentGenerator {
     /**
      * Example使用
      *
-     * @param innerClass
-     * @param introspectedTable
-     * @param markAsDoNotDelete
+     * @param innerClass        内部类
+     * @param introspectedTable 进行自检表
+     * @param markAsDoNotDelete 标记为不删除
      */
     @Override
     public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {

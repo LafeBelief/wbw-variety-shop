@@ -1,5 +1,6 @@
 package cn.wbw.vs;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.spi.FilterReply;
 
@@ -21,6 +22,9 @@ public class SqlLogFilter extends ch.qos.logback.core.filter.Filter<ILoggingEven
      */
     @Override
     public FilterReply decide(ILoggingEvent event) {
+        if (event.getLevel() != Level.DEBUG){
+            return FilterReply.DENY;
+        }
         String message = event.getMessage();
         if (message.toLowerCase().contains("parameter") || message.contains("Preparing") || message.contains("Total")
                 || message.contains("Mapped")) {
